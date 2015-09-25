@@ -41,6 +41,8 @@ module CarrierWave
   private
 
     def mount_base(column, uploader=nil, options={}, &block)
+      raise "No #{column} column on #{to_s}" unless connection.column_exists?(table_name, column)
+      
       super
 
       alias_method :read_uploader, :read_attribute
